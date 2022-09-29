@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const getPost = createAsyncThunk("post/getPost", async ({ id }) => {
-  return fetch('https://jsonplaceholder.typicode.com/posts?_id=${id}').then((res) =>
+  return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then((res) =>
     res.json()
   );
 });
@@ -10,7 +10,7 @@ export const getPost = createAsyncThunk("post/getPost", async ({ id }) => {
 export const deletePost = createAsyncThunk(
   "post/deletePost",
   async ({ id }) => {
-    return fetch('https://jsonplaceholder.typicode.com/posts?_id=${id}', {
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
       method: "DELETE",
     }).then((res) => res.json());
   }
@@ -19,7 +19,7 @@ export const deletePost = createAsyncThunk(
 export const createPost = createAsyncThunk(
   "post/createPost",
   async ({ values }) => {
-    return fetch('https://jsonplaceholder.typicode.com/posts/', {
+    return fetch(`https://jsonplaceholder.typicode.com/posts/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -36,7 +36,7 @@ export const createPost = createAsyncThunk(
 export const putPost = createAsyncThunk(
   "post/putPost",
   async ({ id, body, title }) => {
-    return fetch('https://jsonplaceholder.typicode.com/posts?_id=${id}', {
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -78,6 +78,7 @@ const postSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
     [deletePost.pending]: (state, action) => {
       state.loading = true;
     },
@@ -89,6 +90,7 @@ const postSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
     [createPost.pending]: (state, action) => {
       state.loading = true;
     },
@@ -100,6 +102,7 @@ const postSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
     [putPost.pending]: (state, action) => {
       state.loading = true;
     },
